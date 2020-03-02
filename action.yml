@@ -1,0 +1,11 @@
+name: 'GH actions stale run canceller'
+author: 'Dmitry Rozhdestvenskiy <yellowmegaman@gmail.com>'
+description: 'Shoots old builds'
+branding:
+  icon: 'target'
+  color: 'yellow'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    GITHUB_TOKEN: ${{ inputs.github_token }}
