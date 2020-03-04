@@ -23,7 +23,6 @@ done
 
 
 for run in $runs; do
-	echo "Possible target $run"
 	run_timestamp=$(curl -s "$CURL_HEADERS" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/runs/$run" | jq -r '.head_commit.timestamp')
 	if [[ "$COMMIT_TIMESTAMP" > "$run_timestamp" ]]; then
 		echo "Target: $run $run_timestamp"
