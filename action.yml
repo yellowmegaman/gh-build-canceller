@@ -8,8 +8,11 @@ inputs:
   workflows_filter:
     description: "what workflows we'd like to stop"
     required: false
+  personal_token:
+    description: "personal token with access rights to cancel builds"
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    GITHUB_TOKEN: ${{ inputs.github_token }}
+    PERSONAL_TOKEN: ${{inputs.personal_token}}
