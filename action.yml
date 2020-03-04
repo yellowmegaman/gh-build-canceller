@@ -8,6 +8,9 @@ inputs:
   workflows_filter:
     description: "what workflows we'd like to stop"
     required: false
+  commit_sha:
+    description: "commit that triggered this workflow"
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
