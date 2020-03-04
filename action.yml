@@ -8,6 +8,10 @@ inputs:
   workflows_filter:
     description: "what workflows we'd like to stop"
     required: false
+  git_log_count:
+    default: '50'
+    description: "number of commits to check"
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'

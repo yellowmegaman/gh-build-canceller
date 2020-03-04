@@ -20,7 +20,12 @@ for wf in $workflows; do
 	runs=$(echo $runs $(curl -s "$CURL_HEADERS" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/workflows/$wf/runs" | jq -r '.workflow_runs | .[] | select((.head_sha|test("'$COMMIT_SHA'")|not) and (.status|test("in_progress|queued"))) | .id'))
 done
 
+log=$(git log -n"$INPUT_GIT_LOG_COUNT" --format=format:%H | grep "$COMMIT_SHA" -A"$INPUT_GIT_LOG_COUNT")
+
 for run in $runs; do
 	echo "Possible target $run"
-	echo $(curl -s "$CURL_HEADERS" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/runs/$run" | jq -r '.head_sha')
+	commit=$(curl -s "$CURL_HEADERS" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/runs/$run" | jq -r '.head_sha')
+        if echo log | grep "$commit"; then
+		echo "Target: $run $commit"
+	fi
 done
