@@ -7,7 +7,9 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
   exit 1
 fi
 
-COMMIT_SHA=$(curl -s $CURL_HEADERS -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID | jq '.head_sha')
+COMMIT_SHA=$(curl -s $CURL_HEADERS -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" | jq '.head_sha')
+
+echo "COMMIT_SHA: $COMMIT_SHA"
 
 CURL_HEADERS='-H "authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github.v3+json"'
 GITHUB_URL="https://api.github.com/repos"
