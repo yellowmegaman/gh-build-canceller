@@ -4,6 +4,10 @@ description: 'Shoots old builds'
 branding:
   icon: 'target'
   color: 'yellow'
+inputs:
+  commit_message:
+    description: "what workflows we'd like to stop"
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
