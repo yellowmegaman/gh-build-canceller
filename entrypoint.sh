@@ -15,7 +15,7 @@ COMMITS=$(git log --skip 1 -n"$INPUT_COMMIT_FILTER_LIMIT" --format=format:%H)
 workflows=$(curl -s $CURL_HEADERS -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/workflows"  | jq '.workflows | .[] | select(.name|test("'$INPUT_WORKFLOWS_FILTER'")) | .id')
 
 for wf in $workflows; do
-	runs=$(echo $runs $(curl -s $CURL_HEADERS -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/workflows/$wf/runs" | jq '.workflow_runs | .[] | select((.head_sha|test("'$INPUT_COMMIT_SHA'")|not) and (.status|test("in_progress|queued")) | .id'))
+	runs=$(echo $runs $(curl -s $CURL_HEADERS -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/workflows/$wf/runs" | jq '.workflow_runs | .[] | select((.head_sha|test("'$INPUT_COMMIT_SHA'")|not) and (.status|test("in_progress|queued"))) | .id'))
 done
 
 for run in $runs; do
