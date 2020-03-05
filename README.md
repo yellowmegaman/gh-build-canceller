@@ -11,7 +11,7 @@ A GitHub Action for cancelling old PR builds.
 ### GitHub Actions
 ```
 # File: .github/workflows/shot.yml
-
+name: build_canceller
 on:
   pull_request:
 jobs:
