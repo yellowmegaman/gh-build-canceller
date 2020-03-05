@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: shot
-      uses: yellowmegaman/gh-build-canceller@v1.3
+      uses: yellowmegaman/gh-build-canceller@v1.6
       with:
         github_token: ${{secrets.PERSONAL_TOKEN}}
         workflows_filter: "CI|pr"
