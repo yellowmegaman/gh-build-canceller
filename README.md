@@ -18,7 +18,7 @@ jobs:
   build_canceller:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: shot
       uses: yellowmegaman/gh-build-canceller@v1.3
       with:
