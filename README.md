@@ -15,7 +15,7 @@ A GitHub Action for cancelling old PR builds.
 on:
   pull_request:
 jobs:
-  pull-request:
+  build_canceller:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
