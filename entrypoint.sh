@@ -7,12 +7,13 @@ fi
 GITHUB_URL="https://api.github.com/repos"
 COMMIT_SHA=$(curl -s -H "authorization: Bearer $GITHUB_TOKEN" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" | jq -r '.head_sha')
 COMMIT_TIMESTAMP=$(curl -s -H "authorization: Bearer $GITHUB_TOKEN" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" | jq -r '.head_commit.timestamp')
+HEAD_BRANCH=$(curl -s -H "authorization: Bearer $GITHUB_TOKEN" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" | jq -r '.head_branch')
 echo "COMMIT_SHA: $COMMIT_SHA"
 
 workflows=$(curl -s -H "authorization: Bearer $GITHUB_TOKEN" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/workflows"  | jq -r '.workflows | .[] | select(.name|test("'$INPUT_WORKFLOWS_FILTER'")) | .id')
 
 for wf in $workflows; do
-	runs=$(echo $runs $(curl -s -H "authorization: Bearer $GITHUB_TOKEN" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/workflows/$wf/runs" | jq -r '.workflow_runs | .[] | select((.head_sha|test("'$COMMIT_SHA'")|not) and (.status|test("in_progress|queued"))) | .id'))
+	runs=$(echo $runs $(curl -s -H "authorization: Bearer $GITHUB_TOKEN" -X GET "$GITHUB_URL/$GITHUB_REPOSITORY/actions/workflows/$wf/runs" | jq -r '.workflow_runs | .[] | select((.head_sha|test("'$COMMIT_SHA'")|not) and (.status|test("in_progress|queued")) and (.head_branch=="'$HEAD_BRANCH'")) | .id'))
 done
 
 for run in $runs; do
