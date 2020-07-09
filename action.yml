@@ -5,6 +5,9 @@ branding:
   icon: 'target'
   color: 'yellow'
 inputs:
+  github_token:
+    description: "our github token. we can refer by doing 'secrets.GITHUB_TOKEN'"
+    required: true
   workflows_filter:
     description: "what workflows we'd like to stop"
     required: false
